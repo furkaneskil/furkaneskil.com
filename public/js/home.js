@@ -65,7 +65,7 @@ function show() {
   });
   stage.scrollTop = 0;
   scrollTo(0, 0); // undo the browser's jump to the #fragment target
-  document.title = id === ids[0] ? "Furkan Eskil | Computer Engineer" : `${id} | Furkan Eskil`;
+  document.title = id === ids[0] ? "furkan@eskil" : `${id} | furkan@eskil`;
 }
 
 function go(id) {
