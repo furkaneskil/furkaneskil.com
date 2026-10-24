@@ -4,6 +4,7 @@
   "type": "module",
   "version": "1.0.0",
   "description": "Personal site and blog of Furkan Eskil",
+  "license": "MIT",
   "engines": {
     "node": ">=22.23.4"
   },
