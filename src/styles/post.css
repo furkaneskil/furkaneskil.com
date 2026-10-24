@@ -1,0 +1,158 @@
+/* blog post pages, on top of global.css */
+:root { --danger: #ff5f56; --warn: #ffc800; --code-bg: #040b06; }
+
+.pbar, .post, .pfoot { width: min(720px, 100% - 48px); margin-inline: auto; }
+.pbar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 28px 0 24px; border-bottom: 1px solid var(--line);
+}
+.back { color: var(--muted); transition: color .12s; }
+.back:hover { color: var(--accent); }
+
+.post { padding: 48px 0 24px; }
+.post .cmd { margin-bottom: 26px; }
+.post h1 { font-size: clamp(28px, 5vw, 40px); letter-spacing: -0.03em; margin: 0 0 14px; }
+.post .meta { margin: 0 0 8px; }
+.tags { color: var(--dim); font-size: 13px; margin: 0 0 36px; }
+.tags span { margin-right: 12px; }
+
+.post p, .post li { color: var(--body); }
+.post p { margin: 0 0 18px; line-height: 1.8; }
+.post a:not(.back) { color: var(--accent); border-bottom: 1px solid var(--accent-2); transition: border-color .12s; }
+.post a:not(.back):hover { border-bottom-color: var(--accent); }
+.post strong { color: var(--fg); font-weight: 600; }
+
+.post h2, .post h3 { color: var(--fg); scroll-margin-top: 24px; }
+.post h2 { font: 600 22px/1.3 var(--mono); margin: 52px 0 18px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+.post h3 { font: 600 17px/1.4 var(--mono); margin: 34px 0 12px; }
+.post h2::before, .post h3::before { color: var(--dim); font-weight: 400; margin-right: .6ch; }
+.post h2::before { content: "##"; }
+.post h3::before { content: "###"; }
+
+/* table of contents */
+.toc { border: 1px solid var(--line); padding: 16px 20px; margin: 0 0 26px; }
+.toc .label { color: var(--dim); font-size: 13px; margin: 0 0 8px; }
+.post .toc ol { margin: 0; padding: 0; counter-reset: toc; }
+.post .toc li { padding-left: 4ch; counter-increment: toc; font-size: 14px; line-height: 1.9; }
+.post .toc li::before { content: counter(toc, decimal-leading-zero); color: var(--dim); }
+.post .toc a { color: var(--body); border-bottom-color: transparent; }
+.post .toc a:hover { color: var(--accent); }
+
+/* inline code and keys */
+code { font-family: var(--mono); font-size: .92em; }
+:not(pre) > code { background: #0a1f10; color: var(--accent); padding: 1px 6px; border-radius: 3px; }
+kbd {
+  font: 400 .85em var(--mono); color: var(--fg);
+  border: 1px solid var(--dim); border-bottom-width: 2px; border-radius: 3px; padding: 0 6px;
+}
+
+/* code blocks */
+.code { border: 1px solid var(--line); background: var(--code-bg); margin: 0 0 22px; }
+.code-h {
+  display: flex; align-items: center; gap: 14px;
+  padding: 6px 16px; border-bottom: 1px solid var(--line);
+  font-size: 12px; color: var(--dim);
+}
+.code-h .copy { margin-left: auto; }
+.code-h .lang { color: var(--accent-2); }
+.copy { all: unset; cursor: pointer; color: var(--dim); font: inherit; transition: color .12s; }
+.copy:hover, .copy:focus-visible { color: var(--accent); }
+.code pre.astro-code {
+  margin: 0; padding: 14px 0; overflow-x: auto; background: transparent !important;
+  scrollbar-width: thin; scrollbar-color: var(--line) transparent;
+}
+.code pre.astro-code:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.code pre code { display: grid; min-width: max-content; font-size: 13.5px; line-height: 1.7; white-space: pre; }
+.code .line { position: relative; min-height: calc(13.5px * 1.7); padding: 0 16px 0 14px; border-left: 2px solid transparent; }
+/* ```python {8}: lines that carry the problem */
+.code .line.highlighted { background: rgba(255, 95, 86, .12); border-left-color: var(--danger); }
+/* # [!code ++] / # [!code --] */
+.code .line.diff::before { position: absolute; left: 3px; }
+.code .line.diff.add { background: rgba(57, 255, 106, .10); border-left-color: var(--accent); }
+.code .line.diff.add::before { content: "+"; color: var(--accent); }
+.code .line.diff.remove { background: rgba(255, 95, 86, .10); border-left-color: var(--danger); }
+.code .line.diff.remove::before { content: "-"; color: var(--danger); }
+/* mark="..."; !important beats the inline colors Shiki sets */
+.code .highlighted-word { color: var(--danger) !important; }
+
+/* callouts: > [!NOTE] / [!WARNING] / [!DANGER] */
+.callout { border-left: 2px solid var(--accent-2); padding: 4px 0 4px 18px; margin: 0 0 22px; }
+.callout-title { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--accent); margin-bottom: 4px; }
+.callout-title-icon { display: none; }
+.callout-title-text { text-transform: lowercase; }
+.callout-content > :last-child { margin-bottom: 0; }
+.callout-content p { font-size: 14px; margin-bottom: 8px; }
+.callout[data-callout="warning"], .callout[data-callout="caution"] { border-left-color: var(--warn); }
+.callout[data-callout="warning"] .callout-title, .callout[data-callout="caution"] .callout-title { color: var(--warn); }
+.callout[data-callout="danger"], .callout[data-callout="failure"] { border-left-color: var(--danger); }
+.callout[data-callout="danger"] .callout-title, .callout[data-callout="failure"] .callout-title { color: var(--danger); }
+
+/* collapsible callouts (> [!WARNING]-) are <details>, so undo the generic details box */
+details.callout { border: 0; border-left: 2px solid var(--accent-2); }
+details.callout > summary { padding: 0; border-bottom: 0; }
+details.callout > summary::before { color: currentColor; margin-right: 0; }
+details.callout > .callout-content { margin: 6px 0 0; }
+.callout-fold-icon { display: none; }
+
+blockquote { margin: 0 0 22px; padding: 2px 0 2px 18px; border-left: 2px solid var(--dim); }
+blockquote p { color: var(--fg); margin: 0 0 6px; }
+blockquote p:not(:only-child):last-child { color: var(--dim); font-size: 13px; }
+
+/* lists */
+.post ul, .post ol { padding: 0; margin: 0 0 22px; list-style: none; }
+.post li { position: relative; padding-left: 3ch; margin-bottom: 6px; line-height: 1.7; }
+.post ul > li::before { content: "-"; position: absolute; left: .6ch; color: var(--dim); }
+.post ol { counter-reset: n; }
+.post ol > li { counter-increment: n; }
+.post ol > li::before { content: counter(n) "."; position: absolute; left: 0; color: var(--dim); }
+
+/* table */
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+.post table { display: block; overflow-x: auto; margin: 0 0 22px; }
+th, td { text-align: left; padding: 9px 16px 9px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { color: var(--dim); font-weight: 400; font-size: 13px; }
+td { color: var(--body); }
+td:first-child { color: var(--fg); white-space: nowrap; }
+
+/* figure */
+figure { margin: 0 0 26px; }
+.fig-scroll { overflow-x: auto; border: 1px solid var(--line); background: var(--code-bg); }
+.fig-scroll svg { display: block; width: 100%; min-width: 560px; height: auto; }
+figcaption { color: var(--dim); font-size: 13px; margin-top: 8px; }
+figcaption::before { content: "fig. "; }
+/* images, GIFs and videos from public/ */
+.post img, .post video { display: block; max-width: 100%; height: auto; margin: 0 0 22px; border: 1px solid var(--line); }
+.post video { width: 100%; background: #000; }
+figure img, figure video { margin: 0; }
+.dg-box { fill: none; stroke: var(--dim); stroke-width: 1.2; }
+.dg-box.hot { stroke: var(--danger); }
+.dg-t { fill: var(--fg); font: 400 13px var(--mono); text-anchor: middle; }
+.dg-s { fill: var(--muted); font: 400 12px var(--mono); text-anchor: middle; }
+.dg-bad { fill: var(--danger); font: 400 12px var(--mono); text-anchor: middle; }
+.dg-line { fill: none; stroke: var(--accent-2); stroke-width: 1.4; }
+.dg-head { fill: var(--accent-2); }
+
+/* collapsible */
+details { border: 1px solid var(--line); margin: 0 0 22px; }
+summary { cursor: pointer; padding: 10px 16px; color: var(--fg); list-style: none; }
+summary::-webkit-details-marker { display: none; }
+summary::before { content: "▸"; color: var(--accent); margin-right: 1.2ch; display: inline-block; transition: transform .12s; }
+details[open] > summary::before { transform: rotate(90deg); }
+details[open] > summary { border-bottom: 1px solid var(--line); }
+details > :not(summary) { margin-left: 16px; margin-right: 16px; }
+details > summary + * { margin-top: 14px; }
+details > :last-child { margin-bottom: 14px; }
+
+hr { border: 0; border-top: 1px dashed var(--line); margin: 44px 0; }
+
+sup a { font-size: .8em; padding: 0 1px; }
+.footnotes { font-size: 13px; padding-top: 4px; }
+.footnotes li, .footnotes li p { color: var(--muted); margin: 0; }
+
+.pfoot { padding: 24px 0 56px; display: flex; justify-content: space-between; border-top: 1px solid var(--line); font-size: 13px; color: var(--dim); }
+
+@media (max-width: 560px) {
+  .post { padding-top: 32px; }
+  .post h2 { font-size: 19px; }
+  td:first-child { white-space: normal; }
+}

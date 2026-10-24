@@ -1,0 +1,55 @@
+---
+import { render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { getPosts } from "../../lib/posts";
+import "../../styles/post.css";
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content, headings } = await render(post);
+const { title, description, date, tags } = post.data;
+const day = date.toISOString().slice(0, 10);
+const minutes = Math.max(1, Math.round((post.body ?? "").split(/\s+/).length / 200));
+const toc = headings.filter((h) => h.depth === 2 && h.slug !== "footnote-label");
+---
+
+<Base title={`${title} | Furkan Eskil`} description={description}>
+  <header class="pbar">
+    <a class="brand" href="/#about">furkan<span>@</span>eskil</a>
+    <a class="back" href="/#blog">← blog</a>
+  </header>
+
+  <main class="post">
+    <article>
+      <p class="cmd"><span class="chev">❯</span> cat {post.id}.md</p>
+      <h1>{title}</h1>
+      <p class="meta"><time datetime={day}>{day}</time> · {minutes} min read</p>
+      <p class="tags">{tags.map((t) => <span>#{t}</span>)}</p>
+
+      {
+        toc.length > 2 && (
+          <nav class="toc" aria-label="Contents">
+            <p class="label">contents</p>
+            <ol>
+              {toc.map((h) => (
+                <li><a href={`#${h.slug}`}>{h.text}</a></li>
+              ))}
+            </ol>
+          </nav>
+        )
+      }
+
+      <Content />
+    </article>
+  </main>
+
+  <footer class="pfoot">
+    <a class="back" href="/#blog">← back to blog</a>
+    <span>© {new Date().getFullYear()} Furkan Eskil</span>
+  </footer>
+  <script is:inline slot="end" src="/js/post.js" defer></script>
+</Base>

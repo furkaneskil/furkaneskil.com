@@ -1,0 +1,135 @@
+---
+import Base from "../layouts/Base.astro";
+import { getPosts } from "../lib/posts";
+
+const posts = await getPosts();
+const day = (d: Date) => d.toISOString().slice(0, 10);
+---
+
+<Base
+  title="Furkan Eskil | Computer Engineer"
+  description="Computer engineer. I build software, systems and services."
+>
+  <div class="shell">
+    <header class="top">
+      <a class="brand" href="#about">furkan<span>@</span>eskil</a>
+      <span class="hint">1–5 or ↑↓ to navigate</span>
+    </header>
+
+    <nav class="menu" aria-label="Sections">
+      <a href="#about"><i>1</i>about</a>
+      <a href="#work"><i>2</i>work</a>
+      <a href="#skills"><i>3</i>skills</a>
+      <a href="#blog"><i>4</i>blog</a>
+      <a href="#contact"><i>5</i>contact</a>
+    </nav>
+
+    <main class="stage">
+      <section id="about" class="panel">
+        <p class="cmd"><span class="chev">❯</span> whoami</p>
+        <h1>Furkan Eskil</h1>
+        <p class="lead">Computer engineer. I build software, systems and services.</p>
+        <p class="meta">
+          MSc in Electrical &amp; Electronics Engineering, Mersin University<br />Mersin, Türkiye · open to roles
+        </p>
+        <ul class="rows">
+          <li><a href="mailto:furkaneskil@gmail.com"><span class="k">email</span><span class="v">furkaneskil@gmail.com</span></a></li>
+          <li><a href="https://github.com/furkaneskil"><span class="k">github</span><span class="v">github.com/furkaneskil</span></a></li>
+          <li><a href="https://linkedin.com/in/furkaneskil"><span class="k">linkedin</span><span class="v">linkedin.com/in/furkaneskil</span></a></li>
+          <li><a href="/furkaneskil-cv.pdf"><span class="k">cv</span><span class="v">furkaneskil-cv.pdf ↓</span></a></li>
+        </ul>
+      </section>
+
+      <section id="work" class="panel">
+        <p class="cmd"><span class="chev">❯</span> ls work/</p>
+        <ol class="timeline">
+          <li>
+            <div class="when">Sep 2025 – now</div>
+            <div class="what">
+              <h3>MSc, Electrical &amp; Electronics Engineering</h3>
+              <p class="org">Mersin University · AI-focused thesis track</p>
+            </div>
+          </li>
+          <li>
+            <div class="when">Jan – Mar 2025</div>
+            <div class="what">
+              <h3>Software Developer Intern</h3>
+              <p class="org">Ploud · Istanbul</p>
+              <p>Built an inventory management prototype: stock tracking, inventory control, operational workflows.</p>
+            </div>
+          </li>
+          <li>
+            <div class="when">Oct 2022 – Apr 2023</div>
+            <div class="what">
+              <h3>Software Engineer</h3>
+              <p class="org">Maksopus · Adana</p>
+              <p>Server-side software for an EV charging station management system and its mobile app: remote charge start, session management, app-to-hardware communication.</p>
+            </div>
+          </li>
+          <li>
+            <div class="when">Jul – Sep 2022</div>
+            <div class="what">
+              <h3>Software Developer Intern</h3>
+              <p class="org">Select Bilişim · Remote</p>
+              <p>Developed and tested REST API endpoints for logistics software; backend services and data exchange.</p>
+            </div>
+          </li>
+          <li>
+            <div class="when">Oct 2018 – Aug 2019</div>
+            <div class="what">
+              <h3>Web Application Developer</h3>
+              <p class="org">Provera · Adana</p>
+              <p>Frontend and backend development on enterprise web applications.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section id="skills" class="panel">
+        <p class="cmd"><span class="chev">❯</span> cat skills.txt</p>
+        <dl class="skills">
+          <div><dt>languages</dt><dd>Python, Lua</dd></div>
+          <div><dt>python</dt><dd>Pydantic, pytest</dd></div>
+          <div><dt>data</dt><dd>pandas, NumPy, Matplotlib</dd></div>
+          <div><dt>backend</dt><dd>REST APIs, WebSockets, server-side services, device and app communication</dd></div>
+          <div><dt>gamedev</dt><dd>LÖVE</dd></div>
+          <div><dt>systems</dt><dd>GNU/Linux, macOS, command line, Git, Neovim</dd></div>
+          <div><dt>certificates</dt><dd>Cisco Networking Academy, network security<br />GNU/Linux 101</dd></div>
+          <div><dt>education</dt><dd>BSc Computer Engineering, Çukurova University<br />MSc, Mersin University</dd></div>
+        </dl>
+      </section>
+
+      <section id="blog" class="panel">
+        <p class="cmd"><span class="chev">❯</span> ls blog/</p>
+        {
+          posts.length > 0 ? (
+            <ul class="rows">
+              {posts.map((post) => (
+                <li>
+                  <a href={`/blog/${post.id}/`}>
+                    <span class="k">{day(post.data.date)}</span>
+                    <span class="v">{post.data.title}{post.data.draft ? " (draft)" : ""}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="muted">First posts are on the way.</p>
+          )
+        }
+        <p class="muted">Notes on software and things I am learning.</p>
+      </section>
+
+      <section id="contact" class="panel">
+        <p class="cmd"><span class="chev">❯</span> mail --to furkan</p>
+        <p>Looking for a software engineering role. Email is the fastest way to reach me.</p>
+        <ul class="rows">
+          <li><a href="mailto:furkaneskil@gmail.com"><span class="k">email</span><span class="v">furkaneskil@gmail.com</span></a></li>
+          <li><a href="https://github.com/furkaneskil"><span class="k">github</span><span class="v">github.com/furkaneskil</span></a></li>
+          <li><a href="https://linkedin.com/in/furkaneskil"><span class="k">linkedin</span><span class="v">linkedin.com/in/furkaneskil</span></a></li>
+        </ul>
+      </section>
+    </main>
+  </div>
+  <script is:inline slot="end" src="/js/home.js" defer></script>
+</Base>

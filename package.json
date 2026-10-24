@@ -1,0 +1,22 @@
+{
+  "name": "furkaneskil-com",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "Personal site and blog of Furkan Eskil",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/markdown-satteri": "^0.4.5",
+    "@astrojs/rss": "^4.0.19",
+    "@shikijs/transformers": "^4.5.0",
+    "astro": "^7.4.2",
+    "satteri-callouts": "^1.0.1"
+  }
+}
